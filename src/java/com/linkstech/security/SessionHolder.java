@@ -37,11 +37,11 @@ public class SessionHolder extends Thread {
             try {
                 System.out.println("running session size:" + sessions.size() +" count" +count++);
                 for (UserSession user : sessions) {
-                    if (user.getLastRequest() < Calendar.getInstance().getTimeInMillis() - 1 * 60 * 1000) {
+                    if (user.getLastRequest() < Calendar.getInstance().getTimeInMillis() - 10 * 60 * 1000) {
                         sessions.remove(user);
                     }
                 }
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             } catch (Exception io) {
 
             } finally {
@@ -60,9 +60,9 @@ public class SessionHolder extends Thread {
         return sessions.contains(user);
     }
 
-    public UserSession getUser(int userId) {
+    public UserSession getUser(String token) {
         for (UserSession user : sessions) {
-            if (user.getId() == userId) {
+            if (user.getToken().equals(token)) {
                 return user;
             }
         }

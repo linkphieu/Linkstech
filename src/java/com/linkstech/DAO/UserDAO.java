@@ -11,6 +11,7 @@ import com.linkstech.object.UserSession;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 /**
  *
@@ -38,7 +39,12 @@ public class UserDAO {
             st.setString(2,password);
             ResultSet result = st.executeQuery();
             if (result.next()) {
-                return new UserInfo(result.getInt("id"),result.getString("username"),result.getString("token"));
+                int id = result.getInt("id");
+                st = connection.prepareStatement("update user set last_login = ? where id=?");
+                st.setLong(1,Calendar.getInstance().getTimeInMillis());
+                st.setInt(2, id);
+                st.execute();
+                return new UserInfo(id,result.getString("username"));
             }
         } catch (Exception ex) {
 //            LoggerHelper.getINSTANCE().log("error", ex);

@@ -14,10 +14,9 @@ public class UserInfo extends BaseObject{
     private String username;
     private String token;
 
-    public UserInfo(int id, String username, String token) {
+    public UserInfo(int id, String username) {
         this.id = id;
         this.username = username;
-        this.token = token;
     }
 
     public int getId() {

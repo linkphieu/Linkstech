@@ -36,8 +36,8 @@ public class DataConnector {
 
     public Connection getConnect() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/linkstech", "root", "123456");
-//            return DriverManager.getConnection("jdbc:mysql://localhost:3306/notifygame", "notify", "notify^&*");
+//            return DriverManager.getConnection("jdbc:mysql://localhost:3306/linkstech", "root", "123456");
+            return DriverManager.getConnection("jdbc:mysql://127.10.83.130:3306/linkstech", "adminQjctNw8", "FTEKV7mkF9bJ");
         } catch (SQLException ex) {
 //            LoggerHelper.getINSTANCE().log("error", ex);
         }

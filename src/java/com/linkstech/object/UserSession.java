@@ -11,26 +11,34 @@ package com.linkstech.object;
  */
 public class UserSession {
 
-    private int id;
+    private String token;
     private long lastRequest;
     private String ip;
+    private long loginTime;
 
-    public UserSession(int id, long lastRequest, String ip) {
-        this.id = id;
+    public UserSession(String token, long lastRequest, String ip, long loginTime) {
+        this.token = token;
         this.lastRequest = lastRequest;
         this.ip = ip;
+        this.loginTime = loginTime;
     }
 
-    public UserSession(String string, int aInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public long getLoginTime() {
+        return loginTime;
     }
 
-    public int getId() {
-        return id;
+    public void setLoginTime(long loginTime) {
+        this.loginTime = loginTime;
     }
 
-    public void setId(int id) {
-        this.id = id;
+   
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String id) {
+        this.token = id;
     }
 
 

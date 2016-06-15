@@ -1,6 +1,7 @@
 
 import com.linkstech.business.UserProcess;
 import com.linkstech.object.UserInfo;
+import com.linkstech.security.Security;
 import com.linkstech.security.StringEncoder;
 
 /*
@@ -15,7 +16,6 @@ import com.linkstech.security.StringEncoder;
  */
 public class test {
     public static void main(String[] args) {
-        UserInfo ui = new UserProcess().login("admin", "trung123");
-        System.out.println(ui.toString());
+        System.out.println(Security.generateToken("trung123", "trungvt"));
     }
 }

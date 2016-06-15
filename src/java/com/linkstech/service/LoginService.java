@@ -25,7 +25,8 @@ public class LoginService {
 
     @GET
     public Response login(@Context HttpServletRequest requestContext, @QueryParam("username") String username, @QueryParam("password") String password) {
-        UserInfo user = new UserProcess().login(username, password);
+        String address = requestContext.getRemoteAddr();
+        UserInfo user = new UserProcess().login(address,username, password);
         return Response.status(200).entity(requestContext.getRemoteAddr() + (user != null ? user.toString() : null)).build();
 
     }
