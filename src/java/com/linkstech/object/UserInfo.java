@@ -13,7 +13,8 @@ public class UserInfo extends BaseObject{
     private int id;
     private String username;
     private String token;
-
+    private String password;
+    
     public UserInfo(int id, String username) {
         this.id = id;
         this.username = username;
@@ -41,6 +42,14 @@ public class UserInfo extends BaseObject{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
 }

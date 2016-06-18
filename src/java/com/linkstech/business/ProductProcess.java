@@ -6,17 +6,19 @@
 package com.linkstech.business;
 
 import com.linkstech.security.Security;
+import com.linkstech.security.SessionHolder;
 
 /**
  *
  * @author Link Larkin
  */
 public class ProductProcess {
-    public String getAllProduct(String token,String address){
+    public String getAllProduct(String token,String ip){
 //        SessionHolder.getINSTANCE().getUser(token);
-        if(!Security.isValidToken(token, address)){
+        if(!Security.isValidToken(token, ip)){
             return "false";
         }
+//        SessionHolder.getINSTANCE().
         return "success";
     }
 }

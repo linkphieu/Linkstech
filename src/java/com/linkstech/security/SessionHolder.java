@@ -5,7 +5,6 @@
  */
 package com.linkstech.security;
 
-import com.linkstech.object.UserSession;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -16,11 +15,13 @@ import java.util.List;
  */
 public class SessionHolder extends Thread {
 
-    private static List<UserSession> sessions;
+    private static List<UserSession> userSession;
+    private static List<BaseSession> requestSessions;
     private static SessionHolder sessionHolder;
-    private static int count = 1;
+
     private SessionHolder() {
-        sessions = new ArrayList<UserSession>();
+        userSession = new ArrayList<UserSession>();
+        requestSessions = new ArrayList<BaseSession>();
         this.start();
     }
 
@@ -35,10 +36,16 @@ public class SessionHolder extends Thread {
         while (true) {
             Thread.yield();
             try {
-                System.out.println("running session size:" + sessions.size() +" count" +count++);
-                for (UserSession user : sessions) {
-                    if (user.getLastRequest() < Calendar.getInstance().getTimeInMillis() - 10 * 60 * 1000) {
-                        sessions.remove(user);
+                System.out.println("running session size:" + userSession.size());
+                for (UserSession user : userSession) {
+                    long now = Calendar.getInstance().getTimeInMillis();
+                    if (user.getLastRequest() < now - 10 * 60 * 1000 || user.getLoginTime() < now - 30 * 60 * 1000) {
+                        userSession.remove(user);
+                    }
+                }
+                for (BaseSession registerSession : requestSessions) {
+                    if (registerSession.getLastRequest() < Calendar.getInstance().getTimeInMillis() - 30 * 1000) {
+                        requestSessions.remove(registerSession);
                     }
                 }
                 Thread.sleep(1000);
@@ -53,17 +60,40 @@ public class SessionHolder extends Thread {
     }
 
     public void addUser(UserSession user) {
-        sessions.add(user);
+        userSession.add(user);
     }
 
     public boolean isLogin(UserSession user) {
-        return sessions.contains(user);
+        return userSession.contains(user);
     }
 
     public UserSession getUser(String token) {
-        for (UserSession user : sessions) {
+        for (UserSession user : userSession) {
             if (user.getToken().equals(token)) {
                 return user;
+            }
+        }
+        return null;
+    }
+
+    public boolean removeUser(String token) {
+        for (UserSession user : userSession) {
+            if (user.getToken().equals(token)) {
+                userSession.remove(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addRequestSession(BaseSession registerSession) {
+        requestSessions.add(registerSession);
+    }
+
+    public BaseSession getRequestSession(String ip) {
+        for (BaseSession registerSession : requestSessions) {
+            if (registerSession.getIp() == ip) {
+                return registerSession;
             }
         }
         return null;

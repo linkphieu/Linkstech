@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.linkstech.object;
-
-import com.google.gson.Gson;
+package com.linkstech.object.response;
 
 /**
  *
  * @author Link Larkin
  */
-public class BaseObject {
- 
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
+public class RegiserResponse extends BaseObjectResponse{
     
 }

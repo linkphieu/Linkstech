@@ -5,7 +5,6 @@
  */
 package com.linkstech.security;
 
-import com.linkstech.object.UserSession;
 import java.util.Calendar;
 
 /**
@@ -28,5 +27,12 @@ public class Security {
         }
         userSession.setLastRequest(now);
         return true;
+    }
+    public static boolean isRegisted(String ip){
+        BaseSession registerSession = SessionHolder.getINSTANCE().getRequestSession(ip);
+        if(registerSession==null){
+            return true;
+        }
+        return false;
     }
 }

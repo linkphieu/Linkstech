@@ -22,9 +22,7 @@ import javax.ws.rs.core.Response;
 @Path("/product")
 public class ProductService {
     @GET
-    public Response login(@Context HttpServletRequest requestContext,@QueryParam("token") String token) {
-        
+    public Response getProduct(@Context HttpServletRequest requestContext,@QueryParam("token") String token) {
         return Response.status(200).entity(new ProductProcess().getAllProduct(token,requestContext.getRemoteAddr())).build();
-
     }
 }

@@ -3,23 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.linkstech.object;
+package com.linkstech.security;
 
 /**
  *
  * @author Link Larkin
  */
-public class UserSession {
+public class UserSession extends BaseSession{
 
     private String token;
-    private long lastRequest;
-    private String ip;
     private long loginTime;
 
     public UserSession(String token, long lastRequest, String ip, long loginTime) {
         this.token = token;
-        this.lastRequest = lastRequest;
-        this.ip = ip;
+        super.lastRequest = lastRequest;
+        super.ip = ip;
         this.loginTime = loginTime;
     }
 
@@ -40,23 +38,5 @@ public class UserSession {
     public void setToken(String id) {
         this.token = id;
     }
-
-
-    public long getLastRequest() {
-        return lastRequest;
-    }
-
-    public void setLastRequest(long lastRequest) {
-        this.lastRequest = lastRequest;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-  
     
 }

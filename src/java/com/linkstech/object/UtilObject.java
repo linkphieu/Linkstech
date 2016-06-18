@@ -5,17 +5,14 @@
  */
 package com.linkstech.object;
 
-import com.google.gson.Gson;
-
 /**
  *
  * @author Link Larkin
  */
-public class BaseObject {
- 
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
-    
+public class UtilObject {
+
+    public static final String ADMIN_PASS = "trungvt";
+    public static final int SUCCESS = 1;
+    public static final int ERROR = 2;
+    public static final int LOGIN_ERROR = 4;
 }

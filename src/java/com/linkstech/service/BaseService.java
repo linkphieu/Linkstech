@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.linkstech.object;
+package com.linkstech.service;
 
 /**
  *
  * @author Link Larkin
  */
-public class UltilObject {
-    final public static String admin_pass="trungvt";
+public class BaseService {
+    
 }
