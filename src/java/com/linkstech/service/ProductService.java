@@ -8,6 +8,7 @@ package com.linkstech.service;
 import com.linkstech.business.ProductProcess;
 import com.linkstech.business.UserProcess;
 import com.linkstech.object.UserInfo;
+import com.linkstech.object.response.BaseObjectResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,8 +22,13 @@ import javax.ws.rs.core.Response;
  */
 @Path("/product")
 public class ProductService {
+
     @GET
-    public Response getProduct(@Context HttpServletRequest requestContext,@QueryParam("token") String token) {
-        return Response.status(200).entity(new ProductProcess().getAllProduct(token,requestContext.getRemoteAddr())).build();
+    public Response getProduct(@Context HttpServletRequest requestContext, @QueryParam("token") String token) {
+        BaseObjectResponse baseObjectResponse = new BaseObjectResponse().buildResquestNotAllowed();
+        if (token == null || token.equals("")) {
+            return Response.status(200).entity(baseObjectResponse.buildNullValue().toString()).build();
+        }
+        return Response.status(200).entity(new ProductProcess().getAllProduct(token, requestContext.getRemoteAddr())).build();
     }
 }

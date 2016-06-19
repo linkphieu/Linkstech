@@ -14,7 +14,7 @@ import java.util.Calendar;
 public class Security {
 
     public static String generateToken(String pass, String adminPass) {
-        return StringEncoder.encode(pass + Calendar.getInstance().getTimeInMillis() + adminPass);
+        return StringEncoder.encodePassword(pass + Calendar.getInstance().getTimeInMillis() + adminPass);
     }
 
     public static boolean isValidToken(String token, String address) {

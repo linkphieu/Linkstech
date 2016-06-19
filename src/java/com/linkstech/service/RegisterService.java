@@ -22,24 +22,23 @@ import javax.ws.rs.core.Response;
  */
 @Path("/register")
 public class RegisterService {
-    
+
     @POST
     public Response register(@Context HttpServletRequest request, @QueryParam("username") String username, @QueryParam("password") String password) {
-        BaseObjectResponse baseObjectResponse = new BaseObjectResponse();
+        BaseObjectResponse baseObjectResponse = new BaseObjectResponse().buildResquestNotAllowed();
+        if (username == null || username.equals("") || password == null || password.equals("")) {
+            return Response.status(200).entity(baseObjectResponse.buildNullValue().toString()).build();
+        }
         String ip = request.getRemoteAddr();
         if (!Security.isRegisted(ip)) {
-            baseObjectResponse.setStatus(UtilObject.ERROR);
-            baseObjectResponse.setMessage("Request not allowed!");
             return Response.status(200).entity(baseObjectResponse.toString()).build();
         }
-        
+
         boolean result = new UserProcess().register(request.getRemoteAddr(), username, password);
         if (result) {
-            baseObjectResponse.setStatus(UtilObject.SUCCESS);
-            baseObjectResponse.setMessage("success");
-        }else{
-            baseObjectResponse.setStatus(UtilObject.ERROR);
-            baseObjectResponse.setMessage("Error!");
+            baseObjectResponse.buildSuccess();
+        } else {
+            baseObjectResponse.buildError();
         }
         return Response.status(200).entity(baseObjectResponse.toString()).build();
     }

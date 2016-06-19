@@ -6,12 +6,13 @@
 package com.linkstech.object.response;
 
 import com.linkstech.object.BaseObject;
+import com.linkstech.object.UtilObject;
 
 /**
  *
  * @author Link Larkin
  */
-public class BaseObjectResponse extends BaseObject{
+public class BaseObjectResponse extends BaseObject {
 
     int status;
     String message;
@@ -38,5 +39,27 @@ public class BaseObjectResponse extends BaseObject{
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public BaseObjectResponse buildSuccess() {
+        this.status = UtilObject.SUCCESS;
+        this.message = "Sucess";
+        return this;
+    }
+
+    public BaseObjectResponse buildError() {
+        this.status = UtilObject.ERROR;
+        this.message = "Error!";
+        return this;
+    }
+    public BaseObjectResponse buildNullValue(){
+        this.status = UtilObject.ERROR;
+        this.message = "Null value!";
+        return this;
+    }
+    public BaseObjectResponse buildResquestNotAllowed(){
+        this.status = UtilObject.ERROR;
+        this.message = "Request not allowed!";
+        return this;
     }
 }

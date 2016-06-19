@@ -9,7 +9,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import com.linkstech.object.UserInfo;
-import com.linkstech.DAO.*;
 import com.linkstech.business.UserProcess;
 import com.linkstech.object.UtilObject;
 import com.linkstech.object.response.BaseObjectResponse;
@@ -29,17 +28,16 @@ public class LoginService {
 
     @GET
     public Response login(@Context HttpServletRequest requestContext, @QueryParam("username") String username, @QueryParam("password") String password) {
-        BaseObjectResponse baseObjectResponse = new BaseObjectResponse(UtilObject.ERROR, "Request not allowed!");
+        BaseObjectResponse response = new BaseObjectResponse().buildResquestNotAllowed();
         if (username == null || username.equals("") || password == null || password.equals("")) {
-            baseObjectResponse.setMessage("username or password null!");
-            return Response.status(200).entity(baseObjectResponse.toString()).build();
+            return Response.status(200).entity(response.buildNullValue().toString()).build();
         }
         String ip = requestContext.getRemoteAddr();
         if (!Security.isRegisted(ip)) {
-            return Response.status(401).entity(baseObjectResponse.toString()).build();
+            return Response.status(200).entity(response.toString()).build();
         }
         UserInfo user = new UserProcess().login(ip, username, password);
-        LoginResponse loginResponse = new LoginResponse(UtilObject.SUCCESS, "success", user);
+        LoginResponse loginResponse = new LoginResponse(UtilObject.SUCCESS, "Success", user);
         if (user == null) {
             loginResponse.setStatus(UtilObject.LOGIN_ERROR);
             loginResponse.setMessage("Login failed!");
@@ -50,18 +48,20 @@ public class LoginService {
 
     @POST
     public Response logout(@Context HttpServletRequest requestContext, @QueryParam("token") String token) {
+        BaseObjectResponse response = new BaseObjectResponse().buildResquestNotAllowed();
+        if (token == null || token.equals("")) {
+            return Response.status(200).entity(response.buildNullValue().toString()).build();
+        }
         String ip = requestContext.getRemoteAddr();
-        BaseObjectResponse baseObjectResponse = new BaseObjectResponse(UtilObject.ERROR, "Request not allowed!");
         if (!Security.isRegisted(ip)) {
-            return Response.status(200).entity(baseObjectResponse.toString()).build();
+            return Response.status(200).entity(response.toString()).build();
         }
         boolean result = new UserProcess().logout(token);
         if (result) {
-            baseObjectResponse.setStatus(UtilObject.SUCCESS);
-            baseObjectResponse.setMessage("success");
+            response.buildSuccess();
         } else {
-            baseObjectResponse.setMessage("Error! Check your username and password!");
+            response.buildError();
         }
-        return Response.status(200).entity(baseObjectResponse.toString()).build();
+        return Response.status(200).entity(response.toString()).build();
     }
 }

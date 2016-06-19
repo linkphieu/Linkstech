@@ -22,7 +22,7 @@ import java.util.Calendar;
  */
 public class UserProcess {
 
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     public UserProcess() {
         userDAO = new UserDAO();
@@ -35,8 +35,7 @@ public class UserProcess {
     public UserInfo login(String address, String username, String password) {
         SessionHolder sessionHolder = SessionHolder.getINSTANCE();
         long now = Calendar.getInstance().getTimeInMillis();
-        password += UtilObject.ADMIN_PASS;
-        password = StringEncoder.encode(password);
+        password = StringEncoder.encodePassword(password);
         UserInfo userInfo = new UserDAO().login(username, password);
         if (userInfo != null) {
             String token = Security.generateToken(password, UtilObject.ADMIN_PASS);
@@ -54,7 +53,7 @@ public class UserProcess {
         if (!Security.isRegisted(ip)) {
             return false;
         }
-        password = StringEncoder.encode(password);
+        password = StringEncoder.encodePassword(password);
         if (this.userDAO.insertUser(username, password)) {
             RegisterSession registerSession = new RegisterSession();
             registerSession.setIp(ip);
