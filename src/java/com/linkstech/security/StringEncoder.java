@@ -16,17 +16,17 @@ import java.util.logging.Logger;
  * @author Link Larkin
  */
 public class StringEncoder {
-    
+
     public static String encodePassword(String message) {
-        return encodePassword(UtilObject.ADMIN_PASS + message);
+        return encode(message + UtilObject.ADMIN_PASS);
     }
-    
-    private String encode(String message) {
+
+    private static String encode(String message) {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("MD5");
             md.update(message.getBytes());
-            
+
             byte byteData[] = md.digest();
 
             //convert the byte to hex format method 1

@@ -16,6 +16,6 @@ import com.linkstech.security.StringEncoder;
  */
 public class test {
     public static void main(String[] args) {
-        System.out.println(Security.generateToken("trung123", "trungvt"));
+        System.out.println(StringEncoder.encodePassword("trung123"));
     }
 }
