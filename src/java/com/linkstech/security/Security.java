@@ -5,6 +5,7 @@
  */
 package com.linkstech.security;
 
+import com.linkstech.object.ProductObject;
 import java.util.Calendar;
 
 /**
@@ -13,26 +14,48 @@ import java.util.Calendar;
  */
 public class Security {
 
-    public static String generateToken(String pass, String adminPass) {
-        return StringEncoder.encodePassword(pass + Calendar.getInstance().getTimeInMillis() + adminPass);
+    public static String generateToken(String pass) {
+        return StringEncoder.encodePassword(pass + Calendar.getInstance().getTimeInMillis());
     }
 
     public static boolean isValidToken(String token, String address) {
         UserSession userSession = SessionHolder.getINSTANCE().getUser(token);
         long now = Calendar.getInstance().getTimeInMillis();
-        if (userSession == null || userSession.getLastRequest() > now - 15 * 1000 || 
-                !userSession.getIp().equals(address) || 
-                userSession.getLoginTime() < Calendar.getInstance().getTimeInMillis() - 30 * 60 * 1000) {
+        if (userSession == null || userSession.getLastRequest() > now - 5 * 1000
+                || !userSession.getIp().equals(address)) {
             return false;
         }
         userSession.setLastRequest(now);
         return true;
     }
-    public static boolean isRegisted(String ip){
+
+    public static boolean isRegisted(String ip) {
         BaseSession registerSession = SessionHolder.getINSTANCE().getRequestSession(ip);
-        if(registerSession==null){
+        if (registerSession == null) {
             return true;
         }
         return false;
+    }
+
+    public static boolean isValidProduct(ProductObject po) {
+        if (po.getUserId() == 0) {
+            return false;
+        }
+        if (po.getAdText() == null || po.getAdText().equals("")) {
+            return false;
+        }
+        if (po.getPrice() < 1) {
+            return false;
+        }
+        if (po.getPriceUnit() == null || po.getPriceUnit().equals("")) {
+            return false;
+        }
+        if (po.getImage() == null || po.getImage().equals("")) {
+            return false;
+        }
+        if (po.getLat() == null) {
+            return false;
+        }
+        return po.getLon() != null;
     }
 }

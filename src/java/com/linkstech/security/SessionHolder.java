@@ -86,12 +86,13 @@ public class SessionHolder extends Thread {
     }
 
     public void addRequestSession(BaseSession registerSession) {
+        registerSession.setLastRequest(Calendar.getInstance().getTimeInMillis());
         requestSessions.add(registerSession);
     }
 
     public BaseSession getRequestSession(String ip) {
         for (BaseSession registerSession : requestSessions) {
-            if (registerSession.getIp() == ip) {
+            if (registerSession.getIp().equals(ip)) {
                 return registerSession;
             }
         }

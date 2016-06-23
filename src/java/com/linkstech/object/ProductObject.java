@@ -8,24 +8,25 @@ public class ProductObject {
     private int id;
     private int userId;
     private String userScreenName;
-    private String show;
+    private String adText;
     private long price;
     private String priceUnit;
     private String liked;
     private int commentCount;
-    private double lat;
-    private double lon;
+    private Double lat;
+    private Double lon;
     private double distance;
     private String distanceUnit;
-    
+    private String image;
+
     public ProductObject() {
     }
 
-    public ProductObject(int id, int userId, String userScreenName, String show, long price, String priceUnit, String like, int commentCount, double lat, double lon, double distance, String distanceUnit) {
+    public ProductObject(int id, int userId, String userScreenName, String show, long price, String priceUnit, String like, int commentCount, Double lat, Double lon, double distance, String distanceUnit) {
         this.id = id;
         this.userId = userId;
         this.userScreenName = userScreenName;
-        this.show = show;
+        this.adText = show;
         this.price = price;
         this.priceUnit = priceUnit;
         this.liked = like;
@@ -35,7 +36,7 @@ public class ProductObject {
         this.distance = distance;
         this.distanceUnit = distanceUnit;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -60,12 +61,20 @@ public class ProductObject {
         this.userScreenName = userScreenName;
     }
 
-    public String getShow() {
-        return show;
+    public String getAdText() {
+        return adText;
     }
 
-    public void setShow(String show) {
-        this.show = show;
+    public void setAdText(String adText) {
+        this.adText = adText;
+    }
+
+    public String getLiked() {
+        return liked;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
     }
 
     public long getPrice() {
@@ -84,14 +93,6 @@ public class ProductObject {
         this.priceUnit = priceUnit;
     }
 
-    public String getLike() {
-        return liked;
-    }
-
-    public void setLike(String like) {
-        this.liked = like;
-    }
-
     public int getCommentCount() {
         return commentCount;
     }
@@ -100,19 +101,19 @@ public class ProductObject {
         this.commentCount = commentCount;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public double getLon() {
+    public Double getLon() {
         return lon;
     }
 
-    public void setLon(double lon) {
+    public void setLon(Double lon) {
         this.lon = lon;
     }
 
@@ -131,5 +132,13 @@ public class ProductObject {
     public void setDistanceUnit(String distanceUnit) {
         this.distanceUnit = distanceUnit;
     }
-    
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }

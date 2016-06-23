@@ -17,6 +17,10 @@ public class BaseSession {
     public BaseSession() {
     }
 
+    public BaseSession(String ip) {
+        this.ip = ip;
+    }
+    
     public BaseSession(long lastRequest, String ip) {
         this.lastRequest = lastRequest;
         this.ip = ip;

@@ -75,4 +75,25 @@ public class ProductDAO {
         }
         return 0;
     }
+
+    public boolean insertProduct(ProductObject po) {
+        connection = dataConnector.getConnect();
+        try {
+            PreparedStatement st = connection.prepareStatement("insert into product(userId,ad_text,price,price_unit,lat,lon,image) values(8,'test',10000,'VNĐ',21.01066,105.82216,?)");
+            st.setInt(1, po.getUserId());
+            st.setString(2, po.getAdText());
+            st.setLong(3, po.getPrice());
+            st.setString(4, po.getPriceUnit());
+            st.setDouble(5, po.getLat());
+            st.setDouble(6, po.getLon());
+            st.setString(7, po.getImage());
+            st.execute();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeConnect();
+        }
+    }
 }

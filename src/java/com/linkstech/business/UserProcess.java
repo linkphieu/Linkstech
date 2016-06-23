@@ -32,15 +32,15 @@ public class UserProcess {
         return false;
     }
 
-    public UserInfo login(String address, String username, String password) {
+    public UserInfo login(String ip, String username, String password) {
         SessionHolder sessionHolder = SessionHolder.getINSTANCE();
         long now = Calendar.getInstance().getTimeInMillis();
         password = StringEncoder.encodePassword(password);
         UserInfo userInfo = new UserDAO().login(username, password);
         if (userInfo != null) {
-            String token = Security.generateToken(password, UtilObject.ADMIN_PASS);
-            sessionHolder.addUser(new UserSession(token, now - 5 * 1000, address, now));
-//            sessionHolder.addRequestSession(new BaseSession(now - 5 * 1000, address));
+            String token = Security.generateToken(password);
+            sessionHolder.addUser(new UserSession(token, now - 5 * 1000, ip, now));
+            sessionHolder.addRequestSession(new BaseSession(ip));
             userInfo.setToken(token);
 //        this.userDAO.saveToken(userInfo.getId(), Calendar.getInstance().getTimeInMillis(), token);
         }
@@ -50,15 +50,9 @@ public class UserProcess {
     }
 
     public boolean register(String ip, String username, String password) {
-        if (!Security.isRegisted(ip)) {
-            return false;
-        }
         password = StringEncoder.encodePassword(password);
         if (this.userDAO.insertUser(username, password)) {
-            RegisterSession registerSession = new RegisterSession();
-            registerSession.setIp(ip);
-            registerSession.setLastRequest(Calendar.getInstance().getTimeInMillis());
-            SessionHolder.getINSTANCE().addRequestSession(registerSession);
+            SessionHolder.getINSTANCE().addRequestSession(new BaseSession(ip));
             return true;
         }
         return false;
