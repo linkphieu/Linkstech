@@ -22,7 +22,7 @@ import java.util.Calendar;
  */
 public class UserProcess {
 
-    private final UserDAO userDAO;
+    private UserDAO userDAO;
 
     public UserProcess() {
         userDAO = new UserDAO();

@@ -5,19 +5,33 @@
  */
 package com.linkstech.business;
 
+import com.linkstech.DAO.ProductDAO;
+import com.linkstech.object.ProductObject;
 import com.linkstech.security.Security;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Link Larkin
  */
 public class ProductProcess {
-    public String getAllProduct(String token,String ip){
+    
+    private ProductDAO productDAO;
+    
+    public ProductProcess() {
+        productDAO = new ProductDAO();
+    }
+    
+    public List<ProductObject> getAllProduct(String token, String ip, double lat, double lon) {
 //        SessionHolder.getINSTANCE().getUser(token);
-        if(!Security.isValidToken(token, ip)){
-            return "false";
+        if (!Security.isValidToken(token, ip)) {
+            return null;
         }
-//        SessionHolder.getINSTANCE().
-        return "success";
+        List<ProductObject> list = productDAO.getProduct(21.010711, 105.821999, 10000);
+        for (ProductObject po : list) {
+            po.setCommentCount(productDAO.getCommentCount(po.getId()));
+        }
+        return list;
     }
 }
