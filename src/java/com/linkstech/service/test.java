@@ -5,16 +5,9 @@
  */
 package com.linkstech.service;
 
-import com.linkstech.business.ProductProcess;
-import com.linkstech.object.ProductObject;
-import com.linkstech.object.response.BaseObjectResponse;
-import com.linkstech.object.response.ProductResponse;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import com.linkstech.DAO.UserDAO;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 /**
@@ -26,6 +19,6 @@ public class test {
 
     @GET
     public Response getProduct() {
-        return Response.status(200).entity("thử nghiệm").header("Content-Type", "application/json;charset=UTF-8").build();
+        return Response.status(200).entity(new UserDAO().insertUser2("test", "test")).header("Content-Type", "application/json;charset=UTF-8").build();
     }
 }

@@ -36,7 +36,6 @@ public class SessionHolder extends Thread {
         while (true) {
             Thread.yield();
             try {
-                System.out.println("running session size:" + userSession.size());
                 for (UserSession user : userSession) {
                     long now = Calendar.getInstance().getTimeInMillis();
                     if (user.getLastRequest() < now - 10 * 60 * 1000 || user.getLoginTime() < now - 30 * 60 * 1000) {
@@ -44,7 +43,7 @@ public class SessionHolder extends Thread {
                     }
                 }
                 for (BaseSession registerSession : requestSessions) {
-                    if (registerSession.getLastRequest() < Calendar.getInstance().getTimeInMillis() - 30 * 1000) {
+                    if (registerSession.getLastRequest() < Calendar.getInstance().getTimeInMillis() - 3 * 1000) {
                         requestSessions.remove(registerSession);
                     }
                 }

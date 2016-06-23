@@ -7,7 +7,6 @@ package com.linkstech.DAO;
 
 import com.linkstech.object.UserInfo;
 import java.sql.Connection;
-import com.linkstech.security.UserSession;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,10 +66,26 @@ public class UserDAO {
             st.execute();
             return true;
         } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         } finally {
             closeConnect();
         }
     }
 
+    public String insertUser2(String username, String password) {
+        connection = dataConnector.getConnect();
+        try {
+            PreparedStatement st = connection.prepareStatement("insert into user(username,password) values (?,?)");
+            st.setString(1, username);
+            st.setString(2, password);
+            st.execute();
+            return "true";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ex.getMessage();
+        } finally {
+            closeConnect();
+        }
+    }
 }
