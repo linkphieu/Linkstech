@@ -39,8 +39,8 @@ public class UserProcess {
         UserInfo userInfo = new UserDAO().login(username, password);
         if (userInfo != null) {
             String token = Security.generateToken(password, UtilObject.ADMIN_PASS);
-            sessionHolder.addUser(new UserSession(token, now - 10 * 1000, address, now));
-            sessionHolder.addRequestSession(new BaseSession(now, address));
+            sessionHolder.addUser(new UserSession(token, now - 5 * 1000, address, now));
+//            sessionHolder.addRequestSession(new BaseSession(now - 5 * 1000, address));
             userInfo.setToken(token);
 //        this.userDAO.saveToken(userInfo.getId(), Calendar.getInstance().getTimeInMillis(), token);
         }
@@ -63,7 +63,8 @@ public class UserProcess {
         }
         return false;
     }
-    public boolean logout(String token){
+
+    public boolean logout(String token) {
         return SessionHolder.getINSTANCE().removeUser(token);
     }
 }
