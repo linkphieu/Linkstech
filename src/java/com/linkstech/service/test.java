@@ -6,6 +6,7 @@
 package com.linkstech.service;
 
 import com.linkstech.DAO.UserDAO;
+import java.io.File;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -19,6 +20,9 @@ public class test {
 
     @GET
     public Response getProduct() {
-        return Response.status(200).entity(new UserDAO().insertUser2("test", "test")).header("Content-Type", "application/json;charset=UTF-8").build();
+        File file = new File("././linkstech/images/smartcook.jpg");
+        return Response.status(200).entity(file.getAbsolutePath()).header("Content-Type", "application/json;charset=UTF-8").build();
     }
+
+    
 }

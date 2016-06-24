@@ -7,8 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.Date;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 /*
@@ -23,30 +25,25 @@ import org.apache.tomcat.util.codec.binary.Base64;
 public class test1 {
 
     public static void main(String[] args) {
- 
-        File file = new File("C:/Users/Link Larkin/Desktop/test.jpg");
- 
-        try {            
+
+        File file = new File("C:\\Users\\Link Larkin\\Desktop\\smartcook.jpg");
+
+        try {
             // Reading a Image file from file system
             FileInputStream imageInFile = new FileInputStream(file);
             byte imageData[] = new byte[(int) file.length()];
             imageInFile.read(imageData);
- 
+
             // Converting Image byte array into Base64 String
             String imageDataString = encodeImage(imageData);
             System.out.println(imageDataString);
-            // Converting a Base64 String into Image byte array
-            byte[] imageByteArray = decodeImage(imageDataString);
- 
-            // Write a image byte array into file system
-            FileOutputStream imageOutFile = new FileOutputStream(
-                    "C:/Users/Link Larkin/Desktop/test2.jpg");
-// 
-            imageOutFile.write(imageByteArray);
- 
+            PrintWriter out = new PrintWriter(new File("C:\\Users\\Link Larkin\\Desktop\\test.txt"));
+
+            out.write(imageDataString);
+            out.close();
+
             imageInFile.close();
-            imageOutFile.close();
- 
+
             System.out.println("Image Successfully Manipulated!");
         } catch (FileNotFoundException e) {
             System.out.println("Image not found" + e);
@@ -54,7 +51,7 @@ public class test1 {
             System.out.println("Exception while reading the Image " + ioe);
         }
     }
- 
+
     /**
      * Encodes the byte array into base64 string
      *
@@ -64,7 +61,7 @@ public class test1 {
     public static String encodeImage(byte[] imageByteArray) {
         return Base64.encodeBase64URLSafeString(imageByteArray);
     }
- 
+
     /**
      * Decodes the base64 string into byte array
      *

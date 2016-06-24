@@ -43,9 +43,10 @@
  */
 package com.linkstech.service;
 
+import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@javax.ws.rs.ApplicationPath("service")
+@ApplicationPath("service")
 public class ApplicationConfig extends Application {
-    
+
 }

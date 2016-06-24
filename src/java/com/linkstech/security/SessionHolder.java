@@ -86,7 +86,7 @@ public class SessionHolder extends Thread {
     }
 
     public void addRequestSession(BaseSession registerSession) {
-        registerSession.setLastRequest(Calendar.getInstance().getTimeInMillis());
+//        registerSession.setLastRequest(Calendar.getInstance().getTimeInMillis());
         requestSessions.add(registerSession);
     }
 

@@ -28,17 +28,17 @@ import javax.ws.rs.core.Response;
 public class ProductService {
 
     @GET
-    public Response getProduct(@Context HttpServletRequest requestContext, @QueryParam("token") String token, @QueryParam("lat") double lat, @QueryParam("lon") double lon) {
+    public Response getProduct(@Context HttpServletRequest requestContext, @QueryParam("lat") Double lat, @QueryParam("lon") Double lon) {
         BaseObjectResponse baseObjectResponse = new BaseObjectResponse().buildResquestNotAllowed();
-        if (token == null || token.equals("")) {
+        if (lat == null || lon == null) {
             return Response.status(200).entity(baseObjectResponse.buildNullValue().toString()).build();
         }
         String ip = requestContext.getRemoteAddr();
-        if (!Security.isValidToken(token, ip)) {
+        if (!Security.isRegisted(ip)) {
             return Response.status(200).entity(baseObjectResponse.toString()).build();
         }
         ProductResponse productResponse = new ProductResponse();
-        List<ProductObject> list = new ProductProcess().getAllProduct(token, ip, lat, lon);
+        List<ProductObject> list = new ProductProcess().getAllProduct(ip, lat, lon);
         if (list != null) {
             productResponse.buildSuccess();
             productResponse.setData(list);

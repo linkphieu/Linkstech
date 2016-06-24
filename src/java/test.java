@@ -44,6 +44,7 @@ public class test {
     }
 
     public static void main(String[] args) {
-        System.out.println(distance(21.010711, 105.821999, 21.012682, 105.820065, 'K') * 1000 + " meters\n");
+//        System.out.println(distance(21.010711, 105.821999, 21.012682, 105.820065, 'K') * 1000 + " meters\n");
+        System.out.println(System.getProperty("user.dir"));
     }
 }
