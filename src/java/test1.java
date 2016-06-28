@@ -1,17 +1,11 @@
 
-import com.linkstech.DAO.DataConnector;
-import com.linkstech.business.ProductProcess;
-import com.linkstech.object.response.ProductResponse;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.util.Date;
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,51 +18,15 @@ import org.apache.tomcat.util.codec.binary.Base64;
  */
 public class test1 {
 
-    public static void main(String[] args) {
-
-        File file = new File("C:\\Users\\Link Larkin\\Desktop\\smartcook.jpg");
-
-        try {
-            // Reading a Image file from file system
-            FileInputStream imageInFile = new FileInputStream(file);
-            byte imageData[] = new byte[(int) file.length()];
-            imageInFile.read(imageData);
-
-            // Converting Image byte array into Base64 String
-            String imageDataString = encodeImage(imageData);
-            System.out.println(imageDataString);
-            PrintWriter out = new PrintWriter(new File("C:\\Users\\Link Larkin\\Desktop\\test.txt"));
-
-            out.write(imageDataString);
-            out.close();
-
-            imageInFile.close();
-
-            System.out.println("Image Successfully Manipulated!");
-        } catch (FileNotFoundException e) {
-            System.out.println("Image not found" + e);
-        } catch (IOException ioe) {
-            System.out.println("Exception while reading the Image " + ioe);
-        }
+    public static void main(String[] args) throws Exception {
+        MultipartEntity entity = new MultipartEntity();
+        entity.addPart("file", new FileBody(new File("C:\\Users\\Link Larkin\\Desktop\\test.jpg")));
+        
+        HttpPost request = new HttpPost("http://localhost:8084/linkstech/upload");
+        request.setEntity(entity);
+        
+        HttpClient client = new DefaultHttpClient();
+        HttpResponse response = client.execute(request);
     }
 
-    /**
-     * Encodes the byte array into base64 string
-     *
-     * @param imageByteArray - byte array
-     * @return String a {@link java.lang.String}
-     */
-    public static String encodeImage(byte[] imageByteArray) {
-        return Base64.encodeBase64URLSafeString(imageByteArray);
-    }
-
-    /**
-     * Decodes the base64 string into byte array
-     *
-     * @param imageDataString - a {@link java.lang.String}
-     * @return byte array
-     */
-    public static byte[] decodeImage(String imageDataString) {
-        return Base64.decodeBase64(imageDataString);
-    }
 }
