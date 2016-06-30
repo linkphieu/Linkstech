@@ -5,40 +5,34 @@
  */
 package com.linkstech.service;
 
-import com.linkstech.DAO.UserDAO;
 import com.linkstech.helper.LoggerHelper;
-import static com.linkstech.helper.LoggerHelper.getStackTrace;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.validation.constraints.Pattern;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 /**
  *
  * @author Link Larkin
  */
-@Path("/test")
+//@Path("/test")
 public class test {
 
     @GET
-    public Response getProduct() {
+    public Response getProduct(@Context HttpServletRequest request) {
+        
         String oldline = "";
         File f = new File(System.getenv("OPENSHIFT_DATA_DIR") + "test.txt");
         try {

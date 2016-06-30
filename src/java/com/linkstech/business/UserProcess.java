@@ -39,7 +39,7 @@ public class UserProcess {
         UserInfo userInfo = new UserDAO().login(username, password);
         if (userInfo != null) {
             String token = Security.generateToken(password);
-//            sessionHolder.addUser(new UserSession(token, now - 5 * 1000, ip, now));
+            sessionHolder.addUser(new UserSession(token, now - 5 * 1000, ip, now));
             sessionHolder.addRequestSession(new BaseSession(now - 5 * 1000,ip));
             userInfo.setToken(token);
 //        this.userDAO.saveToken(userInfo.getId(), Calendar.getInstance().getTimeInMillis(), token);

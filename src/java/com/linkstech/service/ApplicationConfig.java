@@ -43,6 +43,7 @@
  */
 package com.linkstech.service;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 

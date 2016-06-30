@@ -5,6 +5,8 @@
  */
 package com.linkstech.servlet;
 
+import com.linkstech.object.response.FileResponse;
+import com.linkstech.security.Security;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -28,10 +31,10 @@ import javax.servlet.http.Part;
  */
 @WebServlet(name = "FileUploadServlet", urlPatterns = {"/upload"})
 @MultipartConfig
-public class test extends HttpServlet {
+public class FileUpload extends HttpServlet {
 
     private final static Logger LOGGER
-            = Logger.getLogger(test.class.getCanonicalName());
+            = Logger.getLogger(FileUpload.class.getCanonicalName());
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,15 +49,20 @@ public class test extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        final PrintWriter writer = response.getWriter();
+        FileResponse fileResponse = new FileResponse();
+        String token = request.getParameter("token");
+        String ip = request.getRemoteAddr();
+        if (!Security.isValidToken(token, ip)) {
+            writer.print(fileResponse.buildError());
+        }
         // Create path components to save the file
-        final String path = "../logs/";//request.getParameter("destination");
+        final String path = System.getenv("OPENSHIFT_DATA_DIR");//request.getParameter("destination");
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
 
         OutputStream out = null;
         InputStream filecontent = null;
-        final PrintWriter writer = response.getWriter();
 
         try {
             out = new FileOutputStream(new File(path + File.separator
@@ -67,6 +75,7 @@ public class test extends HttpServlet {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
+
             writer.println("New file " + fileName + " created at " + path);
             LOGGER.log(Level.INFO, "File{0}being uploaded to {1}",
                     new Object[]{fileName, path});
